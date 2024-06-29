@@ -1,0 +1,22 @@
+{
+  {
+    "id": "7f26a1b2-87a0-44bc-9e14-3207782bfd07",
+    "name": "Computadora Portatil",
+    "cantidad": "5",
+    "precio": "16000"
+  }
+  {
+    "id": "a2438d85-96e0-4db8-be84-2791d86cde3f",
+    "name": "Camara",
+    "cantidad": "4",
+    "precio": "3000"
+  }
+  {
+    "id": "8363a507-424a-4e25-b58b-c8bb700e15c5",
+    "name": "celular",
+    "cantidad": "10",
+    "precio": "12000"
+  }
+ 
+
+}
