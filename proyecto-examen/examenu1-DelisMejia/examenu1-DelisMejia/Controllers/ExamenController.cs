@@ -17,11 +17,10 @@ namespace examenu1_DelisMejia.Controllers
             this._CategoriaServicio = categoriaServicio;
         }
 
-
-        [HttpGet]
+        [HttpGet] // Marcar el metodo para solicitudes tipo GET
         public async Task<ActionResult> GetAll()
         {
-            return Ok(await _CategoriaServicio.GetCrearProductoList());
+            return Ok(await _CategoriaServicio.GetCrearProductoList()); // Retorna toda la lista de categorias
         }
         [HttpPost]
         public async Task<ActionResult> Create(CrearProducto dto)

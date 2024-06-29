@@ -28,37 +28,59 @@ namespace examenu1_DelisMejia.Servicios
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> CreateAsyn(CrearProducto dto)
+        {
+            var categoriesDtos = await ReadCategoriesFromFileAsync();
 
-        //public async Task<bool> EditAsync(ActualizarDto dto, Guid id)
-        //{
-        //    var categoriesDto = await ReadCategoriesFromFileAsync();
+            var categoryDto = new ProductosDto
+            {
+                Id = Guid.NewGuid(),
+                Name = dto.Name,
+                Cantidad = dto.Cantidad,
+                Precio = dto.Precio,
+            };
 
-        //    var existingCategory = ProductosDto.FirstOrDefault(Categoria => Categoria.Id == id);
-        //    if (existingCategory is null)
-        //    {
-        //        return false;
-        //    }
+            categoriesDtos.Add(categoryDto);
 
-        //    for (int i = 0; i < categoriesDto.Count; i++)
-        //    {
-        //        if (categoriesDto[i].Id == id)
-        //        {
-        //            categoriesDto[i].Name = dto.Name;
-        //            categoriesDto[i].Cantidad = dto.Cantidad;
-                    
-        //        }
-        //    }
+            // Pasar de CategoryDto a Category
+            var categories = categoriesDtos.Select(x => new Categoria
+            {
+                Id = x.Id,
+                Name = x.Name,
+            }).ToList();
 
-        //    var categories = categoriesDto.Select(x => new Category
-        //    {
-        //        Id = x.Id,
-        //        Name = x.Name,
-        //        Description = x.Description,
-        //    }).ToList();
+            await WriteCategoriesToFileAsync(categories);
+            return true;
+        }
+        public async Task<bool> EditAsync(ActualizarDto dto, Guid id)
+        {
+            var categories = await ReadCategoriesFromFileAsync();
 
-        //    await WriteCategoriesToFileAsync(categories);
-        //    return true;
-        //}
+            var existingCategory = categories.FirstOrDefault(category => category.Id == id);
+            if (existingCategory is null)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < categories.Count; i++)
+            {
+                if (categories[i].Id == id)
+                {
+                    categories[i].Name = dto.Name;
+                    categories[i].Cantidad = dto.Cantidad;
+                    categories[i].Precio = dto.Precio;
+                }
+            }
+
+            await WriteCategoriesToFileAsync(categories);
+            return true;
+        }
+
+        private async Task WriteCategoriesToFileAsync(List<ProductosDto> categories)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
             var categoriesDto = await ReadCategoriesFromFileAsync();
